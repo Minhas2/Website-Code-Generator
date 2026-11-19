@@ -1,0 +1,223 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>11 Degree - Product Sheet Generator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+
+    <header class="main-header">
+        <h1>Product Sheet Generator</h1>
+        <p>Import your Candela CSV and create printable product checking sheets.</p>
+    </header>
+
+    <section class="panel">
+        <h2>Title</h2>
+        <label for="shopName"></label>
+        <input type="text" id="shopName" value="11 Degree">
+    </section>
+
+    <section class="panel">
+        <h2>Import Products</h2>
+        <p class="help-text">Upload your CSV file exported from Candela.</p>
+
+        <input type="file" id="csvFile" accept=".csv">
+
+        <div class="button-row">
+            <button id="convertBtn" class="primary-btn">Import CSV</button>
+        </div>
+
+        <p id="statusMessage" class="status-message"></p>
+    </section>
+
+    <section id="productsSection" class="panel hidden">
+        <div class="section-heading">
+            <div>
+                <h2>Imported Products</h2>
+                <p id="productCount">0 products</p>
+            </div>
+            <button id="showPrintPreviewBtn" class="primary-btn">
+                Customize Print Sheet
+            </button>
+        </div>
+
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Barcode</th>
+                        <th>Item Name</th>
+                        <th>Cost Price</th>
+                        <th>Retail Price</th>
+                        <th>Price After Discount</th>
+                    </tr>
+                </thead>
+                <tbody id="productTableBody"></tbody>
+            </table>
+        </div>
+    </section>
+
+    <section id="printCustomizationSection" class="panel hidden">
+
+        <div class="section-heading">
+            <div>
+                <h2>Print Customization</h2>
+                <p>Select the columns you want to print.</p>
+            </div>
+            <button id="backBtn" class="secondary-btn">Back to Products</button>
+        </div>
+
+        <div class="selection-area str-mode-area">
+            <h3>Working Mode</h3>
+
+            <label class="checkbox-option str-mode-option">
+                <input type="checkbox" id="strModeCheckbox">
+                Enable STR Mode
+            </label>
+
+            <p class="help-text">
+                Enable this when preparing an STR transfer. A dedicated
+                editable STR Quantity column will appear in your preview.
+            </p>
+
+            <div id="strModeActions" class="str-mode-actions hidden">
+                <button id="generateStrTxtBtn" class="primary-btn">
+                    Generate STR TXT
+                </button>
+                <span class="help-text">
+                    Exports only products with a quantity entered.
+                </span>
+            </div>
+        </div>
+
+        <div class="selection-area">
+            <h3>Price Columns</h3>
+
+            <div class="checkbox-list">
+                <label class="checkbox-option">
+                    <input type="checkbox" id="costPriceCheckbox">
+                    Cost Price
+                </label>
+
+                <label class="checkbox-option">
+                    <input type="checkbox" id="retailPriceCheckbox" checked>
+                    Retail Price
+                </label>
+
+                <label class="checkbox-option">
+                    <input type="checkbox" id="discountPriceCheckbox" checked>
+                    Price After Discount
+                </label>
+            </div>
+
+            <div class="button-row">
+                <button id="selectAllPricesBtn" class="secondary-btn">
+                    Select All Prices
+                </button>
+                <button id="deselectAllPricesBtn" class="secondary-btn">
+                    Deselect All Prices
+                </button>
+            </div>
+        </div>
+
+        <div class="selection-area">
+            <h3>Custom Blank Columns</h3>
+            <p class="help-text">
+                Add your own columns. You can rename them and enter information
+                directly into the cells in the preview.
+            </p>
+
+            <div class="custom-column-input">
+                <input
+                    type="text"
+                    id="customColumnName"
+                    placeholder="Enter column heading"
+                >
+                <button id="addCustomColumnBtn" class="primary-btn">
+                    Add Column
+                </button>
+            </div>
+
+            <div id="customColumnsList" class="custom-columns-list"></div>
+        </div>
+
+        <div class="selected-count">
+            Selected columns: <strong id="selectedColumnCount">4</strong>
+        </div>
+
+        <div class="button-row">
+            <button id="previewPdfBtn" class="secondary-btn">
+                Refresh Preview
+            </button>
+
+            <button id="showFilledEntriesBtn" class="secondary-btn">
+                Preview Saved Entries
+            </button>
+
+            <button id="printBtn" class="primary-btn">
+                Print Full Sheet
+            </button>
+        </div>
+
+        <div class="preview-heading">
+            <h3>Full Product Sheet Preview</h3>
+            <p class="help-text">
+                Click inside any custom column cell to enter or edit information.
+                In STR Mode, you can also enter quantities in the STR Quantity column.
+                Your entries save automatically.
+            </p>
+        </div>
+
+        <div id="printPagesContainer" class="print-pages-container"></div>
+
+    </section>
+
+    <section id="filledEntriesSection" class="panel hidden">
+
+        <div class="section-heading">
+            <div>
+                <h2>Saved Entries Preview</h2>
+                <p id="filledEntriesCount">0 products with entered information</p>
+            </div>
+
+            <button id="backToCustomizationBtn" class="secondary-btn">
+                Back to Customization
+            </button>
+        </div>
+
+        <p class="help-text">
+            Only products with information entered in at least one custom
+            column or the STR Quantity column (when STR Mode is enabled)
+            are displayed here.
+        </p>
+
+        <div class="button-row">
+            <button id="refreshFilledEntriesBtn" class="secondary-btn">
+                Refresh Saved Entries
+            </button>
+
+            <button id="printFilledEntriesBtn" class="primary-btn">
+                Print Saved Entries
+            </button>
+        </div>
+
+        <div class="preview-heading">
+            <h3>Filtered Product Preview</h3>
+        </div>
+
+        <div id="filledEntriesPagesContainer" class="print-pages-container"></div>
+
+    </section>
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+<script src="script.js"></script>
+
+</body>
+</html>

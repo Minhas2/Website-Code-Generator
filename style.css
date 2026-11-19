@@ -1,0 +1,462 @@
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f4f6f9;
+    color: #222;
+    padding: 25px;
+}
+
+.container {
+    max-width: 1200px;
+    margin: auto;
+}
+
+.main-header {
+    margin-bottom: 25px;
+}
+
+.main-header h1 {
+    font-size: 28px;
+    margin-bottom: 8px;
+}
+
+.main-header p,
+.help-text {
+    color: #666;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.panel {
+    background: white;
+    border-radius: 10px;
+    padding: 22px;
+    margin-bottom: 22px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.panel h2 {
+    margin-bottom: 15px;
+    font-size: 21px;
+}
+
+.panel h3 {
+    margin-bottom: 12px;
+    font-size: 16px;
+}
+
+label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+input[type="text"],
+input[type="file"] {
+    width: 100%;
+    padding: 11px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    margin: 8px 0 15px;
+    font-size: 14px;
+}
+
+button {
+    border: none;
+    padding: 11px 17px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    transition: 0.2s;
+}
+
+button:hover {
+    opacity: 0.88;
+}
+
+.primary-btn {
+    background: #171717;
+    color: white;
+}
+
+.secondary-btn {
+    background: #e9edf2;
+    color: #222;
+}
+
+.button-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 12px;
+}
+
+.status-message {
+    margin-top: 12px;
+    font-size: 14px;
+}
+
+.status-message.error {
+    color: #c62828;
+}
+
+.status-message.success {
+    color: #218838;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.section-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+.section-heading p {
+    color: #666;
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+.table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+}
+
+th,
+td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+}
+
+th {
+    background: #f0f2f5;
+    font-weight: 700;
+}
+
+.selection-area {
+    border: 1px solid #e1e1e1;
+    border-radius: 8px;
+    padding: 17px;
+    margin-bottom: 18px;
+}
+
+.checkbox-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 18px;
+}
+
+.checkbox-option {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: normal;
+    margin: 0;
+}
+
+.checkbox-option input {
+    width: 16px;
+    height: 16px;
+}
+
+.str-mode-area {
+    background: #fafafa;
+}
+
+.str-mode-option {
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.str-mode-option input {
+    width: 18px;
+    height: 18px;
+}
+
+.str-mode-actions {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 15px;
+}
+
+.custom-column-input {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.custom-column-input input {
+    flex: 1;
+    min-width: 200px;
+    margin-bottom: 0;
+}
+
+.custom-columns-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.custom-column-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #f0f2f5;
+    padding: 8px 10px;
+    border-radius: 6px;
+    font-size: 13px;
+}
+
+.custom-column-item span {
+    font-weight: 600;
+}
+
+.small-btn {
+    padding: 6px 9px;
+    font-size: 11px;
+}
+
+.edit-column-btn {
+    background: #dce8f8;
+    color: #174b83;
+}
+
+.remove-column-btn {
+    background: #d9534f;
+    color: white;
+}
+
+.selected-count {
+    margin: 18px 0;
+    font-size: 14px;
+}
+
+.preview-heading {
+    margin-top: 25px;
+    margin-bottom: 15px;
+}
+
+.print-pages-container {
+    background: #e5e7eb;
+    padding: 18px;
+    border-radius: 8px;
+    overflow-x: auto;
+}
+
+.print-page {
+    background: white;
+    width: 210mm;
+    height: 297mm;
+    min-height: 297mm;
+    padding: 7mm;
+    margin: 0 auto 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.print-page h2 {
+    text-align: center;
+    font-size: 19px;
+    margin-bottom: 3px;
+}
+
+.print-page .print-subtitle {
+    text-align: center;
+    font-size: 10px;
+    margin-bottom: 8px;
+}
+
+.print-page table {
+    width: 100%;
+    height: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
+    font-size: 10px;
+    flex: 1;
+}
+
+.print-page th,
+.print-page td {
+    padding: 5px 4px;
+    border: 1px solid #555;
+    overflow-wrap: anywhere;
+    text-align: center;
+}
+
+.print-page th {
+    background: #eee;
+    font-weight: bold;
+}
+
+.print-page tbody td {
+    height: 9mm;
+}
+
+.editable-cell {
+    min-width: 30px;
+    min-height: 20px;
+    outline: none;
+    cursor: text;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+}
+
+.editable-cell:focus {
+    background: #fff8d9;
+    outline: 1px solid #d5a900;
+}
+
+.editable-cell:empty::before {
+    content: " ";
+}
+
+.str-quantity-cell {
+    background: #fffdf2;
+    font-weight: 600;
+}
+
+.empty-preview {
+    background: white;
+    padding: 25px;
+    text-align: center;
+    border-radius: 8px;
+}
+
+.empty-preview p {
+    color: #666;
+    margin-top: 8px;
+}
+
+@media (max-width: 700px) {
+    body {
+        padding: 12px;
+    }
+
+    .panel {
+        padding: 15px;
+    }
+
+    .print-pages-container {
+        padding: 8px;
+    }
+
+    .print-page {
+        margin-left: 0;
+        margin-right: 0;
+    }
+}
+
+@page {
+    size: A4 portrait;
+    margin: 0;
+}
+
+@media print {
+    html,
+    body {
+        width: 210mm !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        background: white !important;
+    }
+
+    body * {
+        visibility: hidden !important;
+    }
+
+    body[data-print-target="all"] #printPagesContainer,
+    body[data-print-target="all"] #printPagesContainer * {
+        visibility: visible !important;
+    }
+
+    body[data-print-target="filled"] #filledEntriesPagesContainer,
+    body[data-print-target="filled"] #filledEntriesPagesContainer * {
+        visibility: visible !important;
+    }
+
+    #printPagesContainer,
+    #filledEntriesPagesContainer {
+        position: absolute !important;
+        left: 0 !important;
+        top: 0 !important;
+        width: 210mm !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        background: white !important;
+        overflow: visible !important;
+    }
+
+    .print-page {
+        position: relative !important;
+        display: flex !important;
+        flex-direction: column !important;
+        width: 210mm !important;
+        height: 297mm !important;
+        min-height: 297mm !important;
+        padding: 7mm !important;
+        margin: 0 !important;
+        background: white !important;
+        box-shadow: none !important;
+        overflow: hidden !important;
+
+        page-break-after: always !important;
+        break-after: page !important;
+
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    .print-page:last-child {
+        page-break-after: auto !important;
+        break-after: auto !important;
+    }
+
+    .print-page table {
+        display: table !important;
+        width: 100% !important;
+    }
+
+    .print-page thead {
+        display: table-header-group !important;
+    }
+
+    .print-page tbody {
+        display: table-row-group !important;
+    }
+
+    .print-page tr {
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+    }
+
+    .editable-cell {
+        outline: none !important;
+        background: transparent !important;
+    }
+}
