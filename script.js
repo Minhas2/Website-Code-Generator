@@ -39,6 +39,9 @@ const strModeCheckbox = document.getElementById("strModeCheckbox");
 const strModeActions = document.getElementById("strModeActions");
 const generateStrTxtBtn = document.getElementById("generateStrTxtBtn");
 
+const createPdfBtn = document.getElementById("createPdfBtn");
+const createFilledPdfBtn = document.getElementById("createFilledPdfBtn");
+
 const STORAGE_COLUMNS = "productSheetCustomColumns_v2";
 const STORAGE_VALUES = "productSheetCustomValues_v2";
 const STR_QUANTITY_KEY = "__strQuantity";
@@ -92,10 +95,7 @@ function loadSavedData() {
 
 function saveCustomColumns() {
     try {
-        localStorage.setItem(
-            STORAGE_COLUMNS,
-            JSON.stringify(customColumns)
-        );
+        localStorage.setItem(STORAGE_COLUMNS, JSON.stringify(customColumns));
     } catch (error) {
         alert("Could not save column settings in this browser.");
     }
@@ -103,10 +103,7 @@ function saveCustomColumns() {
 
 function saveCustomValues() {
     try {
-        localStorage.setItem(
-            STORAGE_VALUES,
-            JSON.stringify(customValues)
-        );
+        localStorage.setItem(STORAGE_VALUES, JSON.stringify(customValues));
     } catch (error) {
         alert("Could not save your entries. Browser storage may be full.");
     }
@@ -124,14 +121,10 @@ function normalizeHeader(value) {
 }
 
 function findColumn(headers, possibleNames) {
-    const normalizedHeaders = headers.map(header =>
-        normalizeHeader(header)
-    );
+    const normalizedHeaders = headers.map(header => normalizeHeader(header));
 
     for (const name of possibleNames) {
-        const index = normalizedHeaders.indexOf(
-            normalizeHeader(name)
-        );
+        const index = normalizedHeaders.indexOf(normalizeHeader(name));
 
         if (index !== -1) {
             return headers[index];
@@ -142,17 +135,12 @@ function findColumn(headers, possibleNames) {
 }
 
 function cleanValue(value) {
-    if (value === null || value === undefined) {
-        return "";
-    }
-
+    if (value === null || value === undefined) return "";
     return String(value).trim();
 }
 
 function getNumericPrice(value) {
-    if (value === null || value === undefined || value === "") {
-        return 0;
-    }
+    if (value === null || value === undefined || value === "") return 0;
 
     const cleaned = String(value).replace(/[^0-9.-]/g, "");
     const number = Number(cleaned);
@@ -161,9 +149,7 @@ function getNumericPrice(value) {
 }
 
 function formatPrice(value) {
-    if (value === "" || value === null || value === undefined) {
-        return "";
-    }
+    if (value === "" || value === null || value === undefined) return "";
 
     return Number(value).toLocaleString("en-PK", {
         maximumFractionDigits: 2
@@ -239,52 +225,31 @@ function importCSV() {
 
         complete: function (results) {
             if (!results.data || results.data.length === 0) {
-                showStatus(
-                    "The CSV file is empty or could not be read.",
-                    "error"
-                );
+                showStatus("The CSV file is empty or could not be read.", "error");
                 return;
             }
 
             const headers = results.meta.fields || [];
 
             const barcodeColumn = findColumn(headers, [
-                "Product Code",
-                "Barcode",
-                "Item Code",
-                "ProductCode",
-                "Code"
+                "Product Code", "Barcode", "Item Code", "ProductCode", "Code"
             ]);
 
             const nameColumn = findColumn(headers, [
-                "Name",
-                "Product Name",
-                "Item Name",
-                "ProductName",
-                "ItemName"
+                "Name", "Product Name", "Item Name", "ProductName", "ItemName"
             ]);
 
             const costColumn = findColumn(headers, [
-                "Cost Price",
-                "CostPrice",
-                "Purchase Price"
+                "Cost Price", "CostPrice", "Purchase Price"
             ]);
 
             const retailColumn = findColumn(headers, [
-                "Price",
-                "Retail Price",
-                "Original Price",
-                "RetailPrice",
-                "OriginalPrice"
+                "Price", "Retail Price", "Original Price", "RetailPrice", "OriginalPrice"
             ]);
 
             const discountColumn = findColumn(headers, [
-                "Discount Price",
-                "DiscountPrice",
-                "Price After Discount",
-                "After Discount Price",
-                "PriceAfterDiscount",
-                "AfterDiscountPrice"
+                "Discount Price", "DiscountPrice", "Price After Discount",
+                "After Discount Price", "PriceAfterDiscount", "AfterDiscountPrice"
             ]);
 
             if (!barcodeColumn || !nameColumn) {
@@ -306,11 +271,7 @@ function importCSV() {
             products = results.data.map(row => ({
                 barcode: cleanValue(row[barcodeColumn]),
                 name: cleanValue(row[nameColumn]),
-
-                costPrice: costColumn
-                    ? getNumericPrice(row[costColumn])
-                    : "",
-
+                costPrice: costColumn ? getNumericPrice(row[costColumn]) : "",
                 retailPrice: getNumericPrice(row[retailColumn]),
                 discountPrice: getNumericPrice(row[discountColumn])
             })).filter(product => product.barcode || product.name);
@@ -336,10 +297,7 @@ function importCSV() {
         },
 
         error: function () {
-            showStatus(
-                "There was an error reading the CSV file.",
-                "error"
-            );
+            showStatus("There was an error reading the CSV file.", "error");
         }
     });
 }
@@ -353,9 +311,7 @@ function renderProducts() {
         const values = [
             product.barcode,
             product.name,
-            product.costPrice === ""
-                ? ""
-                : formatPrice(product.costPrice),
+            product.costPrice === "" ? "" : formatPrice(product.costPrice),
             formatPrice(product.retailPrice),
             formatPrice(product.discountPrice)
         ];
@@ -378,21 +334,9 @@ function renderProducts() {
 
 function getPriceColumns() {
     return [
-        {
-            key: "costPrice",
-            label: "Cost Price",
-            checkbox: costPriceCheckbox
-        },
-        {
-            key: "retailPrice",
-            label: "Retail Price",
-            checkbox: retailPriceCheckbox
-        },
-        {
-            key: "discountPrice",
-            label: "Price After Discount",
-            checkbox: discountPriceCheckbox
-        }
+        { key: "costPrice", label: "Cost Price", checkbox: costPriceCheckbox },
+        { key: "retailPrice", label: "Retail Price", checkbox: retailPriceCheckbox },
+        { key: "discountPrice", label: "Price After Discount", checkbox: discountPriceCheckbox }
     ];
 }
 
@@ -431,10 +375,7 @@ function renderCustomColumns() {
         editButton.textContent = "Edit Name";
 
         editButton.addEventListener("click", () => {
-            const newName = prompt(
-                "Enter the new column heading:",
-                column.name
-            );
+            const newName = prompt("Enter the new column heading:", column.name);
 
             if (newName === null) return;
 
@@ -533,9 +474,7 @@ function addCustomColumn() {
 addCustomColumnBtn.addEventListener("click", addCustomColumn);
 
 customColumnName.addEventListener("keydown", event => {
-    if (event.key === "Enter") {
-        addCustomColumn();
-    }
+    if (event.key === "Enter") addCustomColumn();
 });
 
 // --------------------------------------------------
@@ -544,14 +483,8 @@ customColumnName.addEventListener("keydown", event => {
 
 function getSelectedColumns() {
     const columns = [
-        {
-            key: "barcode",
-            label: "Barcode"
-        },
-        {
-            key: "name",
-            label: "Item Name"
-        }
+        { key: "barcode", label: "Barcode" },
+        { key: "name", label: "Item Name" }
     ];
 
     getPriceColumns().forEach(column => {
@@ -606,9 +539,9 @@ function buildPrintPreview(container, filtered = false) {
     let displayProducts = products;
 
     if (filtered) {
-        displayProducts = products.filter(product => {
-            return hasEnteredInformation(product);
-        });
+        displayProducts = products.filter(product =>
+            hasEnteredInformation(product)
+        );
     }
 
     if (displayProducts.length === 0) {
@@ -623,9 +556,7 @@ function buildPrintPreview(container, filtered = false) {
     }
 
     const rowsPerPage = 22;
-    const totalPages = Math.ceil(
-        displayProducts.length / rowsPerPage
-    );
+    const totalPages = Math.ceil(displayProducts.length / rowsPerPage);
 
     for (let pageIndex = 0; pageIndex < totalPages; pageIndex++) {
         const start = pageIndex * rowsPerPage;
@@ -778,9 +709,9 @@ function buildFilledEntriesPreview() {
 }
 
 function updateFilledEntriesCount() {
-    const count = products.filter(product => {
-        return hasEnteredInformation(product);
-    }).length;
+    const count = products.filter(product =>
+        hasEnteredInformation(product)
+    ).length;
 
     filledEntriesCount.textContent =
         `${count} products with entered information`;
@@ -804,7 +735,7 @@ refreshFilledEntriesBtn.addEventListener("click", () => {
 });
 
 // --------------------------------------------------
-// GENERATE STR TXT FILE
+// GENERATE STR TXT
 // --------------------------------------------------
 
 function generateStrTxtFile() {
@@ -823,14 +754,9 @@ function generateStrTxtFile() {
 
     products.forEach(product => {
         const values = getProductCustomValues(product);
+        const quantity = String(values[STR_QUANTITY_KEY] || "").trim();
 
-        const quantity = String(
-            values[STR_QUANTITY_KEY] || ""
-        ).trim();
-
-        if (quantity === "") {
-            return;
-        }
+        if (quantity === "") return;
 
         if (!/^\d+$/.test(quantity) || Number(quantity) <= 0) {
             invalidProducts.push(product.barcode || product.name);
@@ -838,9 +764,7 @@ function generateStrTxtFile() {
         }
 
         if (!product.barcode) {
-            invalidProducts.push(
-                product.name || "Product without barcode"
-            );
+            invalidProducts.push(product.name || "Product without barcode");
             return;
         }
 
@@ -853,22 +777,16 @@ function generateStrTxtFile() {
             invalidProducts.join("\n") +
             "\n\nEnter a positive whole-number quantity for each product."
         );
-
         return;
     }
 
     if (lines.length === 0) {
-        alert(
-            "No STR quantities entered yet. Enter quantities in the STR Quantity column first."
-        );
-
+        alert("No STR quantities entered yet.");
         return;
     }
 
-    const fileContent = lines.join("\r\n");
-
     const blob = new Blob(
-        [fileContent],
+        [lines.join("\r\n")],
         { type: "text/plain;charset=utf-8" }
     );
 
@@ -900,6 +818,143 @@ function generateStrTxtFile() {
 generateStrTxtBtn.addEventListener("click", generateStrTxtFile);
 
 // --------------------------------------------------
+// CREATE PDF FROM PREVIEW
+// --------------------------------------------------
+
+async function createPreviewPDF(container, button, fileName) {
+    if (typeof html2canvas === "undefined" ||
+        typeof window.jspdf === "undefined") {
+        alert("PDF libraries did not load. Please check your internet connection and refresh the page.");
+        return;
+    }
+
+    const pages = Array.from(
+        container.querySelectorAll(".print-page")
+    );
+
+    if (pages.length === 0) {
+        alert("There are no preview pages to convert into PDF.");
+        return;
+    }
+
+    const originalButtonText = button.textContent;
+
+    button.disabled = true;
+    button.textContent = "Creating PDF...";
+
+    try {
+        // Save any active cell edit before capturing the pages.
+        if (document.activeElement &&
+            document.activeElement.classList.contains("editable-cell")) {
+            document.activeElement.blur();
+        }
+
+        const { jsPDF } = window.jspdf;
+
+        const pdf = new jsPDF({
+            orientation: "portrait",
+            unit: "mm",
+            format: "a4",
+            compress: true
+        });
+
+        for (let i = 0; i < pages.length; i++) {
+            button.textContent = `Creating PDF ${i + 1}/${pages.length}...`;
+
+            const canvas = await html2canvas(pages[i], {
+                scale: 2,
+                useCORS: true,
+                backgroundColor: "#ffffff",
+                logging: false,
+                width: pages[i].scrollWidth,
+                height: pages[i].scrollHeight
+            });
+
+            const imageData = canvas.toDataURL("image/jpeg", 0.95);
+
+            if (i > 0) {
+                pdf.addPage("a4", "portrait");
+            }
+
+            pdf.addImage(
+                imageData,
+                "JPEG",
+                0,
+                0,
+                210,
+                297,
+                undefined,
+                "FAST"
+            );
+
+            // Release the page canvas memory before moving on.
+            canvas.width = 1;
+            canvas.height = 1;
+        }
+
+        pdf.save(fileName);
+
+        showStatus(
+            `${fileName} created successfully with ${pages.length} page(s).`,
+            "success"
+        );
+
+    } catch (error) {
+        console.error("PDF creation error:", error);
+
+        alert(
+            "Could not create the PDF. Please try again with fewer products or check the browser console."
+        );
+
+    } finally {
+        button.disabled = false;
+        button.textContent = originalButtonText;
+    }
+}
+
+function getSafeFileName(suffix) {
+    const shopName = document.getElementById("shopName").value.trim()
+        || "Product_Sheet";
+
+    const safeShopName = shopName
+        .replace(/[<>:"/\\|?*]/g, "")
+        .replace(/\s+/g, "_");
+
+    return `${safeShopName}_${suffix}.pdf`;
+}
+
+// Full product sheet PDF
+createPdfBtn.addEventListener("click", async () => {
+    buildPrintPreview(printPagesContainer, false);
+
+    await createPreviewPDF(
+        printPagesContainer,
+        createPdfBtn,
+        getSafeFileName("Full_Product_Sheet")
+    );
+});
+
+// Saved entries PDF
+createFilledPdfBtn.addEventListener("click", async () => {
+    buildFilledEntriesPreview();
+
+    const hasSavedEntries = products.some(product =>
+        hasEnteredInformation(product)
+    );
+
+    if (!hasSavedEntries) {
+        alert("There are no saved entries to create a PDF from.");
+        return;
+    }
+
+    await createPreviewPDF(
+        filledEntriesPagesContainer,
+        createFilledPdfBtn,
+        getSafeFileName("Saved_Entries")
+    );
+});
+
+// --------------------------------------------------
 // NAVIGATION
 // --------------------------------------------------
 
@@ -928,10 +983,7 @@ backBtn.addEventListener("click", () => {
 // --------------------------------------------------
 
 getPriceColumns().forEach(column => {
-    column.checkbox.addEventListener(
-        "change",
-        refreshPrintPreview
-    );
+    column.checkbox.addEventListener("change", refreshPrintPreview);
 });
 
 previewPdfBtn.addEventListener("click", () => {
@@ -939,7 +991,7 @@ previewPdfBtn.addEventListener("click", () => {
 });
 
 // --------------------------------------------------
-// PRINTING - UPDATED TO FIX BLANK PDF
+// PRINTING
 // --------------------------------------------------
 
 function startPrinting(target) {
@@ -947,15 +999,14 @@ function startPrinting(target) {
         ? printPagesContainer
         : filledEntriesPagesContainer;
 
-    if (!container || container.querySelectorAll(".print-page").length === 0) {
+    if (!container ||
+        container.querySelectorAll(".print-page").length === 0) {
         alert("There are no printable product pages.");
         return;
     }
 
-    // Tell the print CSS which preview to show.
     document.body.dataset.printTarget = target;
 
-    // Give the browser time to finish rendering the pages.
     requestAnimationFrame(() => {
         requestAnimationFrame(() => {
             window.print();
@@ -970,16 +1021,15 @@ printBtn.addEventListener("click", () => {
     }
 
     buildPrintPreview(printPagesContainer, false);
-
     startPrinting("all");
 });
 
 printFilledEntriesBtn.addEventListener("click", () => {
     buildFilledEntriesPreview();
 
-    const hasSavedEntries = products.some(product => {
-        return hasEnteredInformation(product);
-    });
+    const hasSavedEntries = products.some(product =>
+        hasEnteredInformation(product)
+    );
 
     if (!hasSavedEntries) {
         alert("There are no saved entries to print yet.");

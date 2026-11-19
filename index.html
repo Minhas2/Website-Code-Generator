@@ -25,7 +25,6 @@
     <section class="panel">
         <h2>Import Products</h2>
         <p class="help-text">Upload your CSV file exported from Candela.</p>
-
         <input type="file" id="csvFile" accept=".csv">
 
         <div class="button-row">
@@ -159,6 +158,10 @@
                 Preview Saved Entries
             </button>
 
+            <button id="createPdfBtn" class="primary-btn">
+                Create PDF
+            </button>
+
             <button id="printBtn" class="primary-btn">
                 Print Full Sheet
             </button>
@@ -201,6 +204,10 @@
                 Refresh Saved Entries
             </button>
 
+            <button id="createFilledPdfBtn" class="primary-btn">
+                Create Saved Entries PDF
+            </button>
+
             <button id="printFilledEntriesBtn" class="primary-btn">
                 Print Saved Entries
             </button>
@@ -217,6 +224,8 @@
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="script.js"></script>
 
 </body>
